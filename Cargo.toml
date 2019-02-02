@@ -1,0 +1,7 @@
+[package]
+name = "messenger-rocket"
+version = "0.1.0"
+authors = ["Sean Smith <sean.smith@tenx.tech>"]
+edition = "2018"
+
+[dependencies]
