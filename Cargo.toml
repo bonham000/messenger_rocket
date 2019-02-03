@@ -5,3 +5,7 @@ authors = ["Sean Smith <sean.smith@tenx.tech>"]
 edition = "2018"
 
 [dependencies]
+rocket = "0.4.0"
+rocket_contrib = "0.4.0"
+serde = "1.0.86"
+serde_derive = "1.0.86"
