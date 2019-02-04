@@ -18,5 +18,6 @@ mod controllers;
 fn main() {
     dotenv().ok();
 
+    // Setup Rocket and fire!
     routes::build_server();
 }
