@@ -15,8 +15,18 @@ pub fn save_message(message: Json<Message>, connection: DbConn) -> QueryResult<S
     result
 }
 
+/// # Service method to edit a message
+/// Edits an existing message content
 pub fn edit_message(message: SavedMessage, connection: DbConn) -> QueryResult<SavedMessage> {
     let result = repository::edit_message(message, &connection);
+
+    result
+}
+
+/// # Service method to delete a message
+/// Deletes a message by id
+pub fn delete_message(id: i32, connection: DbConn) -> QueryResult<usize> {
+    let result = repository::delete_message(id, &connection);
 
     result
 }

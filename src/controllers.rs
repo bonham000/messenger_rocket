@@ -42,6 +42,24 @@ pub fn edit_message(message: Json<SavedMessage>, connection: DbConn) -> Result<J
     }
 }
 
+/// # DELETE an existing message
+/// Deletes a message given the id
+#[delete("/message/<id>")]
+pub fn delete_message(id: i32, connection: DbConn) -> Result<Json<StatusResponse>, String> {
+    let result = service::delete_message(id, connection);
+
+    match result {
+        Ok(_) => {
+            Ok(Json(StatusResponse {
+                status: String::from("Message deleted!")
+            }))
+        },
+        _ => {
+            Err(String::from("Could not delete message"))
+        }
+    }
+}
+
 /// # GET message history handler
 /// Returns most recent 50 messages
 #[get("/messages")]
@@ -59,6 +77,3 @@ pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Strin
         }
     }
 }
-
-// TODO:
-// Add Delete Endpoint

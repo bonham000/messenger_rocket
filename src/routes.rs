@@ -9,9 +9,10 @@ pub fn build_server() {
     rocket::ignite()
         .manage(db::init_pool())
         .mount("/", routes![
-            controllers::save_message,
             controllers::get_messages,
-            controllers::edit_message
+            controllers::save_message,
+            controllers::edit_message,
+            controllers::delete_message
         ])
         .launch();
 }

@@ -4,14 +4,9 @@ use uuid::Uuid;
 use super::schema::messages;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct User {
-    name: String,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
 pub struct Message {
     message: String,
-    author: User,
+    author: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -40,7 +35,7 @@ impl InsertableMessage {
     pub fn from_message(message: Message) -> InsertableMessage {
         InsertableMessage {
             message: (*message.message).to_string(),
-            author: (*message.author.name).to_string(),
+            author: (*message.author).to_string(),
             uuid: format!("{}", Uuid::new_v4()),
         }
     }
