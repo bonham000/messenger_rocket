@@ -6,7 +6,7 @@ use super::types::{Message, SavedMessage, StatusResponse};
 
 /// # POST message handler
 /// Handler for posting a new chat message
-#[post("/post_message", format="json", data = "<message>")]
+#[post("/message", format="json", data = "<message>")]
 pub fn save_message(message: Json<Message>, connection: DbConn) -> Json<StatusResponse> {
     println!("Message received: {:?}", message);
 
@@ -26,6 +26,17 @@ pub fn save_message(message: Json<Message>, connection: DbConn) -> Json<StatusRe
             })
         }
     }
+}
+
+#[put("/message", format = "json", data = "<message>")]
+pub fn edit_message(message: Json<SavedMessage>, connection: DbConn) -> Json<StatusResponse> {
+    println!("Editing message!");
+
+    service::edit_message(message.into_inner(), connection);
+
+    Json(StatusResponse {
+        status: String::from("OK!!!"),
+    })
 }
 
 /// # GET message history handler

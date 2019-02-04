@@ -19,7 +19,7 @@ pub struct StatusResponse {
     pub status: String,
 }
 
-#[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug)]
+#[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug, Identifiable)]
 #[table_name = "messages"]
 pub struct SavedMessage {
     pub id: i32,
@@ -28,7 +28,7 @@ pub struct SavedMessage {
     pub uuid: String,
 }
 
-#[derive(Insertable)]
+#[derive(Serialize, Deserialize, Debug, Insertable)]
 #[table_name = "messages"]
 pub struct InsertableMessage {
     pub message: String,
