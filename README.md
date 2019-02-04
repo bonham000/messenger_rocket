@@ -1,7 +1,7 @@
 
 # Messenger Time Backend
 
-### Rust server using Rocket, WS-RS, and Diesel to support a real-time messenging app
+### Rust server using Rocket, WS-RS, Diesel, and PostgreSQL to support a real-time messenging app
 
 ***
 
