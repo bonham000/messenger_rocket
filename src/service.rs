@@ -14,3 +14,12 @@ pub fn save_message(message: Json<Message>, connection: DbConn) -> QueryResult<S
 
     result
 }
+
+/// # Service method to return recent message history
+/// Returns most recent 50 messages
+pub fn get_messages(connection: DbConn) -> QueryResult<Vec<SavedMessage>> {
+    let result = repository::get_messages(&connection);
+    println!("Messages loaded! {:?}", result);
+
+    result
+}

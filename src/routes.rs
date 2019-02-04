@@ -8,6 +8,6 @@ use super::controllers;
 pub fn build_server() {
     rocket::ignite()
         .manage(db::init_pool())
-        .mount("/", routes![controllers::save_message])
+        .mount("/", routes![controllers::save_message, controllers::get_messages])
         .launch();
 }

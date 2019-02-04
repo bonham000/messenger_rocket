@@ -14,7 +14,7 @@ pub struct Message {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Status {
+pub struct StatusResponse {
     pub status: String,
 }
 

@@ -11,3 +11,12 @@ pub fn insert_message(message: Message, connection: &PgConnection) -> QueryResul
         .values(&InsertableMessage::from_message(message))
         .get_result(connection)
 }
+
+/// # Get messages
+/// Returns most recent 50 messages
+pub fn get_messages(connection: &PgConnection) -> QueryResult<Vec<SavedMessage>> {
+    let limit = 50;
+    let result = messages::table.limit(limit).load::<SavedMessage>(&*connection);
+
+    result
+}
