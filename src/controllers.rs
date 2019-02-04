@@ -44,10 +44,8 @@ pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Strin
             Err(String::from("Error loading message history..."))
         }
     }
-
 }
 
 // TODO:
-// Add Read Endpoint (all message history)
 // Add Edit Endpoint
 // Add Delete Endpoint

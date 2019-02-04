@@ -1,4 +1,5 @@
 use diesel;
+use uuid::Uuid;
 
 use super::schema::messages;
 
@@ -24,6 +25,7 @@ pub struct SavedMessage {
     pub id: i32,
     pub message: String,
     pub author: String,
+    pub uuid: String,
 }
 
 #[derive(Insertable)]
@@ -31,6 +33,7 @@ pub struct SavedMessage {
 pub struct InsertableMessage {
     pub message: String,
     pub author: String,
+    pub uuid: String,
 }
 
 impl InsertableMessage {
@@ -38,6 +41,7 @@ impl InsertableMessage {
         InsertableMessage {
             message: (*message.message).to_string(),
             author: (*message.author.name).to_string(),
+            uuid: format!("{}", Uuid::new_v4()),
         }
     }
 }
