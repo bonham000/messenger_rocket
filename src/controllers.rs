@@ -4,6 +4,24 @@ use super::db::DbConn;
 use super::service;
 use super::types::{Message, SavedMessage, StatusResponse};
 
+/// # GET message history handler
+/// Returns most recent 50 messages
+#[get("/messages")]
+pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, String> {
+    let messages = service::get_messages(connection);
+
+    match messages {
+        Ok(m) => {
+            println!("Returning message history to client!");
+            Ok(Json(m))
+        },
+        Err(_) => {
+            println!("Error loading message history...");
+            Err(String::from("Error loading message history..."))
+        }
+    }
+}
+
 /// # POST message handler
 /// Handler for posting a new chat message
 #[post("/message", format="json", data = "<message>")]
@@ -59,26 +77,3 @@ pub fn delete_message(id: i32, connection: DbConn) -> Result<Json<StatusResponse
         }
     }
 }
-
-/// # GET message history handler
-/// Returns most recent 50 messages
-#[get("/messages")]
-pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, String> {
-    let messages = service::get_messages(connection);
-
-    match messages {
-        Ok(m) => {
-            println!("Returning message history to client!");
-            Ok(Json(m))
-        },
-        Err(_) => {
-            println!("Error loading message history...");
-            Err(String::from("Error loading message history..."))
-        }
-    }
-}
-
-//pub fn parse_socket_message(msg: &str) {
-//    println!("msg: {}", msg);
-//    let message = serde_json::from_str(msg).un_wrap();
-//}

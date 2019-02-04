@@ -4,14 +4,10 @@
 #[macro_use] extern crate diesel;
 #[macro_use] extern crate rocket;
 
-use serde::Deserialize;
-
 extern crate dotenv;
-use diesel::prelude::*;
 use dotenv::dotenv;
 use ws::listen;
 use std::thread;
-use rocket_contrib::json::Json;
 use ws::{Message as WSMessage};
 
 mod schema;
@@ -22,18 +18,28 @@ mod service;
 mod repository;
 mod controllers;
 
-//use types::Message;
-
 fn main() {
     dotenv().ok();
 
+    // Run WebSocket listener on a separate thread to not block the main server thread
     thread::spawn(|| {
         // Listen on an address and call the closure for each connection
         if let Err(error) = listen("127.0.0.1:3012", |out| {
             // The handler needs to take ownership of out, so we use move
             move |msg: WSMessage| {
-                service::handle_socket_message(msg);
-                out.broadcast(String::from("Hello from Server!"))
+                // Parse the message
+                let result = service::handle_socket_message(msg);
+                match result {
+                    Ok(saved_message) => {
+                        // Broadcast response if message was valid
+                        out.broadcast(format!("{:?}", saved_message))
+                    },
+                    Err(_) => {
+                        // No action if any error
+                        println!("Error sending message...");
+                        Ok(())
+                    }
+                }
             }
         }) {
             // Inform the user of failure

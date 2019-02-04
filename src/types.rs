@@ -4,14 +4,14 @@ use uuid::Uuid;
 use super::schema::messages;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Message {
-    message: String,
-    author: String,
+pub struct StatusResponse {
+    pub status: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct StatusResponse {
-    pub status: String,
+pub struct Message {
+    message: String,
+    author: String,
 }
 
 #[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug, Identifiable)]
