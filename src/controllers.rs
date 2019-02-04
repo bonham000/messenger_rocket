@@ -77,3 +77,8 @@ pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Strin
         }
     }
 }
+
+//pub fn parse_socket_message(msg: &str) {
+//    println!("msg: {}", msg);
+//    let message = serde_json::from_str(msg).un_wrap();
+//}

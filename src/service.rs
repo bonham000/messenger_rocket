@@ -1,7 +1,10 @@
 use rocket_contrib::json::Json;
 use diesel;
 use diesel::prelude::*;
+use ws::{Message as SocketMessage};
+use serde_json::error::{Error as SerdeJsonError};
 
+use super::db;
 use super::db::DbConn;
 use super::repository;
 use super::types::{Message, SavedMessage};
@@ -38,4 +41,24 @@ pub fn get_messages(connection: DbConn) -> QueryResult<Vec<SavedMessage>> {
     println!("Messages loaded! {:?}", result);
 
     result
+}
+
+pub fn handle_socket_message(raw_message: SocketMessage) {
+    let maybe_text= raw_message.as_text();
+    match maybe_text {
+        Ok(text) => {
+            let json_result: Result<Message, SerdeJsonError> = serde_json::from_str(text);
+            match json_result {
+                Ok(result) => {
+                    println!("Parsed message: {:?}", result);
+                },
+                _ => {
+                    println!("Could not parse result...")
+                }
+            }
+        },
+        _ => {
+            println!("Could not parse incoming message...");
+        }
+    }
 }
