@@ -7,36 +7,39 @@ use super::types::{Message, SavedMessage, StatusResponse};
 /// # POST message handler
 /// Handler for posting a new chat message
 #[post("/message", format="json", data = "<message>")]
-pub fn save_message(message: Json<Message>, connection: DbConn) -> Json<StatusResponse> {
-    println!("Message received: {:?}", message);
+pub fn save_message(message: Json<Message>, connection: DbConn) -> Result<Json<SavedMessage>, String> {
+    println!("New message received: {:?}", message);
 
     let saved_message = service::save_message(message, connection);
 
     match saved_message {
         Ok(m) => {
             println!("Message saved! {:?}", m);
-            Json(StatusResponse {
-                status: String::from("OK! Message saved successfully."),
-            })
+            Ok(Json(m))
         },
         _ => {
             println!("Error saving message");
-            Json(StatusResponse {
-                status: String::from("Error! Message could not be saved."),
-            })
+            Err(String::from("Could not save message!"))
         }
     }
 }
 
+/// # PUT message edit handler
+/// Edits a message content for an existing message
 #[put("/message", format = "json", data = "<message>")]
-pub fn edit_message(message: Json<SavedMessage>, connection: DbConn) -> Json<StatusResponse> {
-    println!("Editing message!");
+pub fn edit_message(message: Json<SavedMessage>, connection: DbConn) -> Result<Json<SavedMessage>, String> {
+    println!("Editing existing message!");
 
-    service::edit_message(message.into_inner(), connection);
+    let result = service::edit_message(message.into_inner(), connection);
 
-    Json(StatusResponse {
-        status: String::from("OK!!!"),
-    })
+    match result {
+        Ok(m) => {
+            Ok(Json(m))
+        },
+        _ => {
+            Err(String::from("Could not edit message!"))
+        }
+    }
 }
 
 /// # GET message history handler
@@ -58,5 +61,4 @@ pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Strin
 }
 
 // TODO:
-// Add Edit Endpoint
 // Add Delete Endpoint
