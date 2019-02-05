@@ -7,5 +7,4 @@
 
 **Todo:**
 
-* Add tests
-* Figure out deployment
+* Add some tests
