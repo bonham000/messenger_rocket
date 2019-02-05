@@ -1,8 +1,6 @@
 use rocket_contrib::json::Json;
 use diesel;
 use diesel::prelude::*;
-use ws::{Message as SocketMessage};
-use serde_json::error::{Error as SerdeJsonError};
 
 use super::postgres::DbConn;
 use super::repository;
@@ -30,29 +28,4 @@ pub fn edit_message(message: SavedMessage, connection: DbConn) -> QueryResult<Sa
 /// Deletes a message by id
 pub fn delete_message(id: i32, connection: DbConn) -> QueryResult<usize> {
     repository::delete_message(id, &connection)
-}
-
-/// # Handle parsing WebSocket messages
-/// Parses message to only forward messages if incoming message is valid
-pub fn handle_socket_message(raw_message: SocketMessage) -> Result<SavedMessage, &'static str> {
-    let maybe_text= raw_message.as_text();
-    match maybe_text {
-        Ok(text) => {
-            let json_result: Result<SavedMessage, SerdeJsonError> = serde_json::from_str(text);
-            match json_result {
-                Ok(result) => {
-                    println!("Parsed WebSocket message: {:?}", result);
-                    Ok(result)
-                },
-                Err(e) => {
-                    println!("Error parsing JSON from WebSocket message: {:?}", e);
-                    Err("Message parsing failure")
-                }
-            }
-        },
-        Err(e) => {
-            println!("Could not parse text from WebSocket message: {:?}", e);
-            Err("Message parsing failure")
-        }
-    }
 }
