@@ -34,8 +34,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RustConfig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+            <state relative-caret-position="52">
+              <caret line="2" column="56" selection-start-line="2" selection-start-column="56" selection-end-line="2" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -44,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/Procfile">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="26">
-              <caret line="1" column="46" lean-forward="true" selection-start-line="1" selection-start-column="46" selection-end-line="1" selection-end-column="46" />
+              <caret line="1" column="79" lean-forward="true" selection-start-line="1" selection-start-column="79" selection-end-line="1" selection-end-column="79" />
             </state>
           </provider>
         </entry>
@@ -162,6 +162,17 @@
               <item name="messenger-rocket" type="b2602c69:ProjectViewProjectNode" />
               <item name="messenger-rocket" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="messenger-rocket" type="b2602c69:ProjectViewProjectNode" />
+              <item name="messenger-rocket" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="messenger-rocket" type="b2602c69:ProjectViewProjectNode" />
+              <item name="messenger-rocket" type="462c0819:PsiDirectoryNode" />
+              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="release" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -429,15 +440,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RustConfig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+        <state relative-caret-position="52">
+          <caret line="2" column="56" selection-start-line="2" selection-start-column="56" selection-end-line="2" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Procfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="26">
-          <caret line="1" column="46" lean-forward="true" selection-start-line="1" selection-start-column="46" selection-end-line="1" selection-end-column="46" />
+          <caret line="1" column="79" lean-forward="true" selection-start-line="1" selection-start-column="79" selection-end-line="1" selection-end-column="79" />
         </state>
       </provider>
     </entry>
