@@ -2,7 +2,7 @@ use diesel;
 use diesel::prelude::*;
 
 use super::schema::messages::dsl::*;
-use super::types::{Message, SavedMessage, InsertableMessage};
+use super::types::{InsertableMessage, Message, SavedMessage};
 
 /// # Get messages
 /// Method to return recent messages
@@ -25,7 +25,10 @@ pub fn save_message(new_message: Message, connection: &PgConnection) -> QueryRes
 
 /// # Edit a message
 /// Method to edit an existing message
-pub fn edit_message(message_edit: SavedMessage, connection: &PgConnection) -> QueryResult<SavedMessage> {
+pub fn edit_message(
+    message_edit: SavedMessage,
+    connection: &PgConnection,
+) -> QueryResult<SavedMessage> {
     let result = diesel::update(messages.filter(id.eq(message_edit.id)))
         .set(message.eq(message_edit.message))
         .get_result(connection);

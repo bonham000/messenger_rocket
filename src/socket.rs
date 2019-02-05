@@ -1,9 +1,9 @@
+use serde_json::error::Error as SerdeJsonError;
+use std::thread;
 use ws::listen;
 use ws::Message;
-use std::thread;
-use serde_json::error::{Error as SerdeJsonError};
 
-use super::types::{SavedMessage};
+use super::types::SavedMessage;
 
 /// # Open WebSockets listener
 /// Handle realtime message communication to connected clients
@@ -21,7 +21,7 @@ pub fn run_socket_listener() {
                     Ok(saved_message) => {
                         // Broadcast response if message was valid
                         out.broadcast(format!("{:?}", saved_message))
-                    },
+                    }
                     Err(_) => {
                         // No action if any error
                         Ok(())
@@ -38,7 +38,7 @@ pub fn run_socket_listener() {
 /// # Handle parsing WebSocket messages
 /// Parses message to only forward messages if incoming message is valid
 fn handle_socket_message(raw_message: Message) -> Result<SavedMessage, &'static str> {
-    let maybe_text= raw_message.as_text();
+    let maybe_text = raw_message.as_text();
     match maybe_text {
         Ok(text) => {
             let json_result: Result<SavedMessage, SerdeJsonError> = serde_json::from_str(text);
@@ -46,13 +46,13 @@ fn handle_socket_message(raw_message: Message) -> Result<SavedMessage, &'static 
                 Ok(result) => {
                     println!("Parsed WebSocket message: {:?}", result);
                     Ok(result)
-                },
+                }
                 Err(e) => {
                     println!("Error parsing JSON from WebSocket message: {:?}", e);
                     Err("Message parsing failure")
                 }
             }
-        },
+        }
         Err(e) => {
             println!("Could not parse text from WebSocket message: {:?}", e);
             Err("Message parsing failure")
