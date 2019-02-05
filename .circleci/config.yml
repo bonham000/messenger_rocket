@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rust
+      - image: rust:slim
 
     steps:
       - checkout
@@ -12,6 +12,7 @@ jobs:
       - run:
           name: Check formatting
           command: |
+            rustup component add rustfmt
             rustfmt --version
             cargo fmt -- --check
       - run:
