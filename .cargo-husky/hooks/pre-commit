@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# cargo-husky git hook
+# https://github.com/rhysd/cargo-husky#readme
+#
+
+set -e
+
+echo '+cargo test'
+cargo fmt
