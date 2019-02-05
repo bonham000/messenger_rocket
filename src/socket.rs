@@ -59,3 +59,12 @@ fn handle_socket_message(raw_message: Message) -> Result<SavedMessage, &'static 
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+        /// TODO: Test handle_socket_message here
+        assert_eq!(2 + 2, 4);
+    }
+}
