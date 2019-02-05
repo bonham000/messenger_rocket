@@ -12,7 +12,7 @@ pub fn health_check() -> String {
 /// # GET message history handler
 /// Returns most recent 50 messages
 #[get("/messages")]
-pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, String> {
+pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Json<String>> {
     let messages = service::get_messages(connection);
 
     match messages {
@@ -22,7 +22,7 @@ pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Strin
         },
         Err(e) => {
             println!("Error loading message history: {:?}", e);
-            Err(String::from("Error loading message history..."))
+            Err(Json(String::from("Error loading message history...")))
         }
     }
 }
