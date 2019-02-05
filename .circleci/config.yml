@@ -19,8 +19,7 @@ jobs:
           name: Test
           command: |
             rustup default nightly
-            apt install libglib2.0-dev
-            cargo test
+            RUSTFLAGS="-C linker=x86_64-unknown-linux-gnu" cargo test
       - save_cache:
           key: project-cache
           paths:
