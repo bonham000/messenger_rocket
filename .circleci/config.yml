@@ -19,6 +19,7 @@ jobs:
           name: Test
           command: |
             rustup default nightly
+            apt install libglib2.0-dev
             cargo test
       - save_cache:
           key: project-cache
