@@ -20,8 +20,8 @@ pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Strin
             println!("Returning message history to client!");
             Ok(Json(m))
         },
-        Err(_) => {
-            println!("Error loading message history...");
+        Err(e) => {
+            println!("Error loading message history: {:?}", e);
             Err(String::from("Error loading message history..."))
         }
     }
