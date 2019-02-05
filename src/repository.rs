@@ -15,7 +15,7 @@ pub fn get_messages(connection: &PgConnection) -> QueryResult<Vec<SavedMessage>>
 
 /// # Insert new message
 /// Method to insert a new message into the database
-pub fn insert_message(new_message: Message, connection: &PgConnection) -> QueryResult<SavedMessage> {
+pub fn save_message(new_message: Message, connection: &PgConnection) -> QueryResult<SavedMessage> {
     let result = diesel::insert_into(messages)
         .values(&InsertableMessage::from_message(new_message))
         .get_result(connection);

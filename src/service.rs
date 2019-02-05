@@ -15,7 +15,7 @@ pub fn get_messages(connection: DbConn) -> QueryResult<Vec<SavedMessage>> {
 /// # Service method to save a message
 /// Saves a new method to the database
 pub fn save_message(message: Json<Message>, connection: DbConn) -> QueryResult<SavedMessage> {
-    repository::insert_message(message.into_inner(), &connection)
+    repository::save_message(message.into_inner(), &connection)
 }
 
 /// # Service method to edit a message

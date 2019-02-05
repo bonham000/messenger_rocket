@@ -8,3 +8,4 @@
 **Todo:**
 
 * Add some tests
+* Add limit/pagination for GET endpoint
