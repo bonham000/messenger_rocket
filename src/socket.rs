@@ -1,7 +1,7 @@
 use ws::listen;
+use ws::Message;
 use std::thread;
 use serde_json::error::{Error as SerdeJsonError};
-use ws::Message;
 
 use super::types::{SavedMessage};
 

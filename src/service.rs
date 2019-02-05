@@ -1,6 +1,6 @@
-use rocket_contrib::json::Json;
 use diesel;
 use diesel::prelude::*;
+use rocket_contrib::json::Json;
 
 use super::postgres::DbConn;
 use super::repository;

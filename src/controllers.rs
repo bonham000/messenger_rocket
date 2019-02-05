@@ -1,6 +1,6 @@
-use rocket_contrib::json::Json;
 use rocket::Response;
 use rocket::http::Status;
+use rocket_contrib::json::Json;
 
 use super::postgres::DbConn;
 use super::service;
