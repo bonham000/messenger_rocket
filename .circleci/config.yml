@@ -17,7 +17,9 @@ jobs:
             cargo fmt -- --check
       - run:
           name: Test
-          command: rustup run nightly cargo test
+          command: |
+            rustup default nightly
+            cargo test
       - save_cache:
           key: project-cache
           paths:
