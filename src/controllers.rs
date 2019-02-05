@@ -30,7 +30,7 @@ pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Strin
 /// # POST message handler
 /// Handler for posting a new chat message
 #[post("/message", format="json", data = "<message>")]
-pub fn save_message(message: Json<Message>, connection: DbConn) -> Result<Json<SavedMessage>, String> {
+pub fn save_message(message: Json<Message>, connection: DbConn) -> Result<Json<SavedMessage>, Json<String>> {
     println!("New message received: {:?}", message);
 
     let saved_message = service::save_message(message, connection);
@@ -40,9 +40,9 @@ pub fn save_message(message: Json<Message>, connection: DbConn) -> Result<Json<S
             println!("Message saved! {:?}", m);
             Ok(Json(m))
         },
-        _ => {
-            println!("Error saving message");
-            Err(String::from("Could not save message!"))
+        Err(e) => {
+            println!("Error saving message, {:?}", e);
+            Err(Json(String::from("Could not save message!")))
         }
     }
 }

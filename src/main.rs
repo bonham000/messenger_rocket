@@ -27,6 +27,7 @@ fn main() {
         if let Err(error) = listen("127.0.0.1:3012", |out| {
             // The handler needs to take ownership of out, so we use move
             move |msg: WSMessage| {
+                println!("Received message via WebSockets");
                 // Parse the message
                 let result = service::handle_socket_message(msg);
                 match result {
