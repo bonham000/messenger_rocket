@@ -1,13 +1,13 @@
 use rocket;
 
-use super::db;
+use super::postgres;
 use super::controllers;
 
 /// # Builder for Rocket server and routes
 /// Initializes database connection pool and route handlers and launches Rocket
 pub fn build_server() {
     rocket::ignite()
-        .manage(db::init_pool())
+        .manage(postgres::init_pool())
         .mount("/", routes![
             controllers::health_check,
             controllers::get_messages,

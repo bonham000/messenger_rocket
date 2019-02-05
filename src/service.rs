@@ -4,40 +4,32 @@ use diesel::prelude::*;
 use ws::{Message as SocketMessage};
 use serde_json::error::{Error as SerdeJsonError};
 
-use super::db::DbConn;
+use super::postgres::DbConn;
 use super::repository;
 use super::types::{Message, SavedMessage};
 
 /// # Service method to return recent message history
 /// Returns most recent 50 messages
 pub fn get_messages(connection: DbConn) -> QueryResult<Vec<SavedMessage>> {
-    let result = repository::get_messages(&connection);
-
-    result
+    repository::get_messages(&connection)
 }
 
 /// # Service method to save a message
 /// Saves a new method to the database
 pub fn save_message(message: Json<Message>, connection: DbConn) -> QueryResult<SavedMessage> {
-    let result = repository::insert_message(message.into_inner(), &connection);
-
-    result
+    repository::insert_message(message.into_inner(), &connection)
 }
 
 /// # Service method to edit a message
 /// Edits an existing message content
 pub fn edit_message(message: SavedMessage, connection: DbConn) -> QueryResult<SavedMessage> {
-    let result = repository::edit_message(message, &connection);
-
-    result
+    repository::edit_message(message, &connection)
 }
 
 /// # Service method to delete a message
 /// Deletes a message by id
 pub fn delete_message(id: i32, connection: DbConn) -> QueryResult<usize> {
-    let result = repository::delete_message(id, &connection);
-
-    result
+    repository::delete_message(id, &connection)
 }
 
 /// # Handle parsing WebSocket messages
@@ -49,18 +41,18 @@ pub fn handle_socket_message(raw_message: SocketMessage) -> Result<SavedMessage,
             let json_result: Result<SavedMessage, SerdeJsonError> = serde_json::from_str(text);
             match json_result {
                 Ok(result) => {
-                    println!("Parsed message: {:?}", result);
+                    println!("Parsed WebSocket message: {:?}", result);
                     Ok(result)
                 },
-                Err(_) => {
-                    println!("Could not parse result...");
-                    Err("Message could not be parsed...")
+                Err(e) => {
+                    println!("Error parsing JSON from WebSocket message: {:?}", e);
+                    Err("Message parsing failure")
                 }
             }
         },
-        Err(_) => {
-            println!("Could not parse incoming message...");
-            Err("Message could not be parsed...")
+        Err(e) => {
+            println!("Could not parse text from WebSocket message: {:?}", e);
+            Err("Message parsing failure")
         }
     }
 }
