@@ -4,6 +4,11 @@ use super::db::DbConn;
 use super::service;
 use super::types::{Message, SavedMessage, StatusResponse};
 
+#[get("/rocket")]
+pub fn health_check() -> String {
+    String::from("Hello from Messenger Rocket server")
+}
+
 /// # GET message history handler
 /// Returns most recent 50 messages
 #[get("/messages")]
