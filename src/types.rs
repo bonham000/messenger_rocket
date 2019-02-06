@@ -14,7 +14,7 @@ pub struct Message {
     author: String,
 }
 
-#[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug, Identifiable)]
+#[derive(Queryable, AsChangeset, Serialize, Deserialize, Debug, Identifiable, PartialEq, Eq)]
 #[table_name = "messages"]
 pub struct SavedMessage {
     pub id: i32,

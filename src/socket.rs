@@ -41,6 +41,7 @@ fn handle_socket_message(raw_message: Message) -> Result<SavedMessage, &'static 
     let maybe_text = raw_message.as_text();
     match maybe_text {
         Ok(text) => {
+            println!("New WebSocket message received, text: {}", text);
             let json_result: Result<SavedMessage, SerdeJsonError> = serde_json::from_str(text);
             match json_result {
                 Ok(result) => {
@@ -62,9 +63,44 @@ fn handle_socket_message(raw_message: Message) -> Result<SavedMessage, &'static 
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+    use ws::Message;
+
     #[test]
-    fn it_works() {
-        /// TODO: Test handle_socket_message here
-        assert_eq!(2 + 2, 4);
+    fn test_success_handle_socket_message() {
+        let test_input = "{\
+                          \"id\": 1,\
+                          \"message\": \"Hello, from Earth\",\
+                          \"author\": \"Seanie X\",\
+                          \"uuid\": \"asdf78asd6f89sa6f89a76s8df\"\
+                          }";
+        let test_message = Message::text(test_input);
+        let test_result = handle_socket_message(test_message);
+
+        let expected_result: SavedMessage = SavedMessage {
+            id: 1,
+            message: String::from("Hello, from Earth"),
+            author: String::from("Seanie X"),
+            uuid: String::from("asdf78asd6f89sa6f89a76s8df"),
+        };
+        assert_eq!(test_result.unwrap(), expected_result);
+    }
+
+    #[test]
+    fn test_failure_handle_socket_message() {
+        let mut test_input = "{\
+                              \"id\": 1,\
+                              message: \"Hello, from Earth\",\
+                              \"author\": \"Seanie X\",\
+                              \"uuid\": \"asdf78asd6f89sa6f89a76s8df\"\
+                              }";
+        let test_message = Message::text(test_input);
+        let test_result = handle_socket_message(test_message);
+        assert!(test_result.is_err(), "Message parsing failure");
+
+        test_input = "{{ - && }}}";
+        let test_message = Message::text(test_input);
+        let test_result = handle_socket_message(test_message);
+        assert!(test_result.is_err(), "Message parsing failure");
     }
 }
