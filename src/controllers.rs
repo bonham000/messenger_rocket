@@ -101,11 +101,3 @@ fn get_failure_status() -> Response<'static> {
         .status(Status::InternalServerError)
         .finalize()
 }
-
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-}
