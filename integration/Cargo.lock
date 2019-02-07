@@ -304,7 +304,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "integration"
 version = "0.1.0"
 dependencies = [
- "hyper 0.12.23 (registry+https://github.com/rust-lang/crates.io-index)",
  "reqwest 0.9.9 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

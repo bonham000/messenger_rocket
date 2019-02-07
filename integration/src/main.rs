@@ -5,18 +5,44 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    extern crate hyper;
     extern crate reqwest;
 
     use std::{thread, time};
 
     #[test]
     fn health_check_endpoint() {
-        thread::sleep(time::Duration::from_millis(5000));
-        let body = reqwest::get("http://0.0.0.0:8000/rocket").unwrap()
-            .text().unwrap();
-
+        server_status();
+        let result = reqwest::get("http://0.0.0.0:8000/rocket");
         let expected = "Hello from Messenger Rocket server";
-        assert_eq!(body, expected);
+        assert_eq!(result.unwrap().text().unwrap(), expected);
+    }
+
+    // Loop until server is ready
+    fn server_status() {
+        let mut limit = 0;
+        let maximum = 15;
+        let mut maybe_response = reqwest::get("http://0.0.0.0:8000/rocket");
+        loop {
+            match maybe_response {
+                Ok(_) => {
+                    println!("Rocket is ready - running tests!");
+                    break;
+                },
+                Err(_) => {
+                    wait();
+                    limit = limit + 1;
+                    if limit > maximum {
+                        panic!("Maximum retries reached - aborting tests!");
+                    } else {
+                        maybe_response = reqwest::get("http://0.0.0.0:8000/rocket");
+                    }
+                }
+            }
+        }
+    }
+
+    fn wait() {
+        println!("Rocket Server not ready yet... retrying in 3 seconds");
+        thread::sleep(time::Duration::from_millis(3000));
     }
 }
