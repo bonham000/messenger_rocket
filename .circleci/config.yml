@@ -3,8 +3,8 @@ version: 2
 jobs:
   build:
     docker:
-#      - image: rustlang/rust:nightly
-      - image: docker/compose:1.16.1
+      - image: rustlang/rust:nightly
+#      - image: docker/compose:1.16.1
 
     steps:
       - checkout
