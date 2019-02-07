@@ -3,22 +3,27 @@ version: 2
 jobs:
   build:
     docker:
-      - image: rustlang/rust:nightly
+#      - image: rustlang/rust:nightly
+      - image: docker/compose:1.16.1
 
     steps:
       - checkout
       - restore_cache:
           key: project-cache
       - run:
-          name: Check formatting
+          name: Check Formatting
           command: |
             rustup component add rustfmt
             rustfmt --version
             cargo fmt -- --check
       - run:
-          name: Test
+          name: Unit Tests
           command: |
             cargo test
+      - run:
+          name: Integration Tests
+          command: |
+            ./integration_test.sh
       - save_cache:
           key: project-cache
           paths:
