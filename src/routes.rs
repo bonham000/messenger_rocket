@@ -5,7 +5,7 @@ use super::postgres;
 
 /// # Builder for Rocket server and routes
 /// Initializes database connection pool and route handlers and launches Rocket
-pub fn build_server() {
+pub fn build_server() -> rocket::Rocket {
     rocket::ignite()
         .manage(postgres::init_pool())
         .mount(
@@ -18,5 +18,4 @@ pub fn build_server() {
                 controllers::delete_message
             ],
         )
-        .launch();
 }
