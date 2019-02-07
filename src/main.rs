@@ -34,17 +34,17 @@ fn rocket() -> rocket::Rocket {
     routes::build_server()
 }
 
-#[cfg(test)]
-mod test {
-    use super::rocket;
-    use rocket::local::Client;
-    use rocket::http::Status;
-
-    #[test]
-    fn hello_world() {
-        let client = Client::new(rocket()).expect("valid rocket instance");
-        let mut response = client.get("/messages").dispatch();
-        assert_eq!(response.status(), Status::Ok);
-        assert_eq!(response.body_string(), Some("[]".into()));
-    }
-}
+//#[cfg(test)]
+//mod test {
+//    use super::rocket;
+//    use rocket::local::Client;
+//    use rocket::http::Status;
+//
+//    #[test]
+//    fn hello_world() {
+//        let client = Client::new(rocket()).expect("valid rocket instance");
+//        let mut response = client.get("/messages").dispatch();
+//        assert_eq!(response.status(), Status::Ok);
+//        assert_eq!(response.body_string(), Some("[]".into()));
+//    }
+//}
