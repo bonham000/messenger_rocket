@@ -1,5 +1,5 @@
 [package]
-name = "messenger-rocket"
+name = "messenger_rocket"
 version = "0.1.0"
 authors = ["Sean Smith <sean.smith@tenx.tech>"]
 edition = "2018"
