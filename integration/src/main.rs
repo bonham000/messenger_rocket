@@ -1,6 +1,7 @@
 
 fn main() {
     // Integration tests for the Messenger Rocket server
+    println!("This is a Rust program containing the integration tests for the Rocket server!");
 }
 
 #[cfg(test)]

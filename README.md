@@ -5,7 +5,14 @@
 
 ***
 
-**Todo:**
+**Running the Server**
 
-* Add some tests
-* Add limit/pagination for GET endpoint
+Install Docker and run the command `docker-compose up`.
+
+Or, run the server directly with `cargo run` (use nightly Rust).
+
+**Running Tests**
+
+To run the project unit tests run `cargo test`.
+
+To run integration tests run the script `integration_test.sh`. The integration tests live in the `integration`/ directory.
