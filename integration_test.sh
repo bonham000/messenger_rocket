@@ -2,4 +2,4 @@
 
 docker-compose up -d
 cd integration && cargo test -- --nocapture
-docker-compose down
+#docker-compose down
