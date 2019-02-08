@@ -21,9 +21,9 @@ jobs:
           command: |
             cargo test
       - run:
-        name: Integration Tests
-        command: |
-          ./integration_test.sh
+          name: Integration Tests
+          command: |
+            ./integration_test.sh
       - save_cache:
           key: project-cache
           paths:
