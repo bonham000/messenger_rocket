@@ -1,10 +1,9 @@
 version: 2
 
 jobs:
-  unit_tests:
+  build:
     docker:
       - image: rustlang/rust:nightly
-#      - image: docker/compose:1.16.1
 
     steps:
       - checkout
@@ -20,10 +19,6 @@ jobs:
           name: Unit Tests
           command: |
             cargo test
-      - run:
-          name: Integration Tests
-          command: |
-            ./integration_test.sh
       - save_cache:
           key: project-cache
           paths:
@@ -52,7 +47,7 @@ jobs:
     version: 2
     run_tests:
       jobs:
-        - unit_tests
+        - build
         - integration_tests:
             requires:
-              - unit_tests
+              - build
