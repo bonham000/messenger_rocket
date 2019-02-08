@@ -4,12 +4,18 @@ jobs:
   build:
     docker:
       - image: rustlang/rust:nightly
-      - image: docker/compose:1.16.1
+#      - image: docker/compose:1.16.1
 
     steps:
       - checkout
       - restore_cache:
           key: project-cache
+     - run:
+       name: Install Docker Compose
+       command: |
+         curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+         chmod +x ~/docker-compose
+         sudo mv ~/docker-compose /usr/local/bin/docker-compose
       - run:
           name: Check Formatting
           command: |
