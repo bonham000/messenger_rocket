@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  tests:
+  build:
     docker:
       - image: rustlang/rust:nightly
       - image: docker/compose:1.16.1
