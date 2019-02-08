@@ -66,7 +66,7 @@ mod tests {
     // Loop until server is ready
     fn wait_for_server() {
         let mut limit = 0;
-        let maximum = 30;
+        let maximum = 50;
         let mut maybe_response = reqwest::get("http://0.0.0.0:8000/rocket");
         loop {
             match maybe_response {
