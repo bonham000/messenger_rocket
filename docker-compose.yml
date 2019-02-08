@@ -12,8 +12,9 @@ services:
     command: >
       bash -c "bash ./wait-for-it.sh db:5432 -q --
       echo DATABASE_URL=postgresql://postgres:pgpassword@db:5432/db> .env &&
-      diesel setup && diesel migration redo && cargo run"
-
+      diesel setup &&
+      diesel migration redo &&
+      ./target/release/messenger_rocket"
   db:
     environment:
       POSTGRES_USER: postgres
