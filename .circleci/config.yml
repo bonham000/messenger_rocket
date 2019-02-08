@@ -53,4 +53,6 @@ jobs:
     run_tests:
       jobs:
         - unit_tests
-        - integration_tests
+        - integration_tests:
+            requires:
+              - unit_tests
