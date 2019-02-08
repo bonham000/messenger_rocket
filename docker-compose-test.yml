@@ -14,7 +14,7 @@ services:
       echo DATABASE_URL=postgresql://postgres:pgpassword@db:5432/db> .env &&
       diesel setup &&
       diesel migration redo &&
-      cargo run"
+      ./target/release/messenger_rocket"
   db:
     environment:
       POSTGRES_USER: postgres
@@ -24,8 +24,3 @@ services:
     image: postgres:9.6.6
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data/pgdata
-
-volumes:
-  pgdata: {}
