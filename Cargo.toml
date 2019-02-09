@@ -15,7 +15,7 @@ serde_derive = "1.0.86"
 r2d2-diesel = "1.0"
 r2d2 = "0.8"
 uuid = { version = "0.6", features = ["serde", "v4"] }
-ws = { version = "0.7.9", features = ["ssl"] }
+ws = "0.7.9"
 
 [dev-dependencies]
 cargo-husky = "1"
