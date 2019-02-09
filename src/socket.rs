@@ -8,6 +8,7 @@ use super::types::{MessageBroadcast, MessageBroadcastType, SavedMessage};
 /// # Open WebSockets listener
 /// Handle realtime message communication to connected clients
 pub fn run_socket_listener() {
+    println!("Initializing web sockets listener");
     // Run WebSocket listener on a separate thread to not block the main server thread
     thread::spawn(|| {
         // Listen on an address and call the closure for each connection
