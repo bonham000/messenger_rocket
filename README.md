@@ -20,3 +20,4 @@ To run integration tests run the script `test.sh`. This will build a release of 
 **Todo:**
 
 * Get integration tests to run in CI.
+* Figure out why websockets doesn't work in deployment.
