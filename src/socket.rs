@@ -12,7 +12,7 @@ pub fn run_socket_listener() {
     // Run WebSocket listener on a separate thread to not block the main server thread
     thread::spawn(|| {
         // Listen on an address and call the closure for each connection
-        if let Err(error) = listen("0.0.0.0:3012", |out| {
+        if let Err(error) = listen("127.0.0.1:3012", |out| {
             // The handler needs to take ownership of out, so we use move
             move |msg: Message| {
                 println!("Received message via WebSockets");
