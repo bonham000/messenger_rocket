@@ -3,7 +3,7 @@ use std::thread;
 use ws::listen;
 use ws::Message;
 
-use super::types::{SavedMessage, MessageBroadcast, MessageBroadcastType};
+use super::types::{MessageBroadcast, MessageBroadcastType, SavedMessage};
 
 /// # Open WebSockets listener
 /// Handle realtime message communication to connected clients
@@ -22,14 +22,9 @@ pub fn run_socket_listener() {
                         // Broadcast response if message was valid
                         let json_broadcast = serde_json::to_string(&saved_message);
                         match json_broadcast {
-                            Ok(json) => {
-                                out.broadcast(Message::text(json))
-                            }
-                            Err(_) => {
-                                Ok(())
-                            }
+                            Ok(json) => out.broadcast(Message::text(json)),
+                            Err(_) => Ok(()),
                         }
-
                     }
                     Err(_) => {
                         // No action if any error
@@ -78,13 +73,13 @@ mod tests {
     #[test]
     fn test_success_handle_socket_message() {
         let test_input = "{\
-                        \"message_type\" : \"NEW\",\
-                        \"message\": {\
-                              \"id\": 1,\
-                              \"message\": \"Hello, from Earth\",\
-                              \"author\": \"Seanie X\",\
-                              \"uuid\": \"asdf78asd6f89sa6f89a76s8df\"\
-                              }\
+                          \"message_type\" : \"NEW\",\
+                          \"message\": {\
+                          \"id\": 1,\
+                          \"message\": \"Hello, from Earth\",\
+                          \"author\": \"Seanie X\",\
+                          \"uuid\": \"asdf78asd6f89sa6f89a76s8df\"\
+                          }\
                           }";
         let test_message = Message::text(test_input);
         let test_result = handle_socket_message(test_message);
