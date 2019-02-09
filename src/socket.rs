@@ -3,7 +3,7 @@ use std::thread;
 use ws::listen;
 use ws::Message;
 
-use super::types::{MessageBroadcast, MessageBroadcastType, SavedMessage};
+use super::types::*;
 
 /// # Open WebSockets listener
 /// Handle realtime message communication to connected clients
@@ -42,7 +42,7 @@ pub fn run_socket_listener() {
 
 /// # Handle parsing WebSocket messages
 /// Parses message to only forward messages if incoming message is valid
-fn handle_socket_message(raw_message: Message) -> Result<MessageBroadcast, &'static str> {
+pub fn handle_socket_message(raw_message: Message) -> Result<MessageBroadcast, &'static str> {
     let maybe_text = raw_message.as_text();
     match maybe_text {
         Ok(text) => {
