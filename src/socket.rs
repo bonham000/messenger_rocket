@@ -3,7 +3,7 @@ use std::thread;
 use ws::listen;
 use ws::Message;
 
-use super::types::SavedMessage;
+use super::types::{SavedMessage, MessageBroadcast, MessageBroadcastType};
 
 /// # Open WebSockets listener
 /// Handle realtime message communication to connected clients
@@ -11,7 +11,7 @@ pub fn run_socket_listener() {
     // Run WebSocket listener on a separate thread to not block the main server thread
     thread::spawn(|| {
         // Listen on an address and call the closure for each connection
-        if let Err(error) = listen("127.0.0.1:3012", |out| {
+        if let Err(error) = listen("0.0.0.0:3012", |out| {
             // The handler needs to take ownership of out, so we use move
             move |msg: Message| {
                 println!("Received message via WebSockets");
@@ -20,7 +20,16 @@ pub fn run_socket_listener() {
                 match result {
                     Ok(saved_message) => {
                         // Broadcast response if message was valid
-                        out.broadcast(format!("{:?}", saved_message))
+                        let json_broadcast = serde_json::to_string(&saved_message);
+                        match json_broadcast {
+                            Ok(json) => {
+                                out.broadcast(Message::text(json))
+                            }
+                            Err(_) => {
+                                Ok(())
+                            }
+                        }
+
                     }
                     Err(_) => {
                         // No action if any error
@@ -37,12 +46,12 @@ pub fn run_socket_listener() {
 
 /// # Handle parsing WebSocket messages
 /// Parses message to only forward messages if incoming message is valid
-fn handle_socket_message(raw_message: Message) -> Result<SavedMessage, &'static str> {
+fn handle_socket_message(raw_message: Message) -> Result<MessageBroadcast, &'static str> {
     let maybe_text = raw_message.as_text();
     match maybe_text {
         Ok(text) => {
             println!("New WebSocket message received, text: {}", text);
-            let json_result: Result<SavedMessage, SerdeJsonError> = serde_json::from_str(text);
+            let json_result: Result<MessageBroadcast, SerdeJsonError> = serde_json::from_str(text);
             match json_result {
                 Ok(result) => {
                     println!("Parsed WebSocket message: {:?}", result);
@@ -69,19 +78,26 @@ mod tests {
     #[test]
     fn test_success_handle_socket_message() {
         let test_input = "{\
-                          \"id\": 1,\
-                          \"message\": \"Hello, from Earth\",\
-                          \"author\": \"Seanie X\",\
-                          \"uuid\": \"asdf78asd6f89sa6f89a76s8df\"\
+                        \"message_type\" : \"NEW\",\
+                        \"message\": {\
+                              \"id\": 1,\
+                              \"message\": \"Hello, from Earth\",\
+                              \"author\": \"Seanie X\",\
+                              \"uuid\": \"asdf78asd6f89sa6f89a76s8df\"\
+                              }\
                           }";
         let test_message = Message::text(test_input);
         let test_result = handle_socket_message(test_message);
 
-        let expected_result: SavedMessage = SavedMessage {
+        let expected_message: SavedMessage = SavedMessage {
             id: 1,
             message: String::from("Hello, from Earth"),
             author: String::from("Seanie X"),
             uuid: String::from("asdf78asd6f89sa6f89a76s8df"),
+        };
+        let expected_result: MessageBroadcast = MessageBroadcast {
+            message_type: MessageBroadcastType::NEW,
+            message: expected_message,
         };
         assert_eq!(test_result.unwrap(), expected_result);
     }

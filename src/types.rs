@@ -23,6 +23,19 @@ pub struct SavedMessage {
     pub uuid: String,
 }
 
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq)]
+pub enum MessageBroadcastType {
+    NEW,
+    EDIT,
+    DELETE,
+}
+
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq)]
+pub struct MessageBroadcast {
+    pub message: SavedMessage,
+    pub message_type: MessageBroadcastType,
+}
+
 #[derive(Serialize, Deserialize, Debug, Insertable)]
 #[table_name = "messages"]
 pub struct InsertableMessage {

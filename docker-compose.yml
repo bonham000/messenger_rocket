@@ -5,6 +5,7 @@ services:
     build: .
     ports:
       - "8000:8000"
+      - "3012:3012"
     volumes:
       - ./:/usr/src/app
     links:
