@@ -13,10 +13,11 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql://postgres:pgpassword@db:5432/db
+      ENV: $ENV
     command: >
       bash -c "bash ./wait-for-it.sh db:5432 -q --
       diesel setup && diesel migration redo &&
-      cargo run"
+      ./run.sh"
   db:
     container_name: "Postgres"
     environment:
