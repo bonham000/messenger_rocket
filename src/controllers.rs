@@ -96,6 +96,23 @@ pub fn delete_message(
     }
 }
 
+/// # DELETE all existing messages
+/// Deletes all messages that exist
+#[delete("/admin/delete")]
+pub fn delete_all(connection: DbConn) -> Result<Json<StatusResponse>, Response<'static>> {
+    let result = service::delete_all(connection);
+
+    match result {
+        Ok(_) => Ok(Json(StatusResponse {
+            status: String::from("All messages deleted"),
+        })),
+        Err(e) => {
+            println!("Error deleting all messages: {:?}", e);
+            Err(get_failure_status())
+        }
+    }
+}
+
 fn get_failure_status() -> Response<'static> {
     Response::build()
         .status(Status::InternalServerError)

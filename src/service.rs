@@ -29,3 +29,9 @@ pub fn edit_message(message: SavedMessage, connection: DbConn) -> QueryResult<Sa
 pub fn delete_message(id: i32, connection: DbConn) -> QueryResult<usize> {
     repository::delete_message(id, &connection)
 }
+
+/// # Service method to delete all messages
+/// Deletes all existing messages
+pub fn delete_all(connection: DbConn) -> QueryResult<usize> {
+    repository::delete_all(&connection)
+}

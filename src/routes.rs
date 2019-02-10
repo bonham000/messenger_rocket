@@ -13,7 +13,8 @@ pub fn build_server() -> rocket::Rocket {
             controllers::get_messages,
             controllers::save_message,
             controllers::edit_message,
-            controllers::delete_message
+            controllers::delete_message,
+            controllers::delete_all,
         ],
     )
 }

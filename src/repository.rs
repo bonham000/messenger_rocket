@@ -41,3 +41,9 @@ pub fn edit_message(
 pub fn delete_message(message_id: i32, connection: &PgConnection) -> QueryResult<usize> {
     diesel::delete(messages.find(message_id)).execute(connection)
 }
+
+/// # Delete all messages
+/// Handle deleting all messages
+pub fn delete_all(connection: &PgConnection) -> QueryResult<usize> {
+    diesel::delete(messages).execute(connection)
+}
