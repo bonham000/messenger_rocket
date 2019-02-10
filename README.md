@@ -25,5 +25,3 @@ To run integration tests run the script `test.sh`. This will build a release of 
 **Frontend**
 
 Built with React Native: https://github.com/bonham000/messenger-app.
-
-![messenger-rocket-demo](https://user-images.githubusercontent.com/18126719/52529844-c9e09a00-2d34-11e9-9c62-89e7bf722ac6.gif)
