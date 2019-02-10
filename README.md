@@ -17,7 +17,7 @@ Or, run the server directly with `cargo run` (use nightly Rust). To do this you 
 
 To run the project unit tests run `cargo test`.
 
-To run integration tests run the script `test.sh`. This will build a release of the Rocket server and run it with docker compose, and then run a test suite against the live server. The integration tests live in the `integration`/ directory.
+To run integration tests run the script `scripts/test.sh`. This will build a release of the Rocket server and run it with docker compose, and then run a test suite against the live server. The integration tests live in the `integration`/ directory.
 
 **CI**
 
