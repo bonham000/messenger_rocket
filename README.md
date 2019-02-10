@@ -19,7 +19,7 @@ To run the project unit tests run `cargo test`.
 
 To run integration tests run the script `scripts/test.sh`. This will build a release of the Rocket server and run it with docker compose, and then run a test suite against the live server. The integration tests live in the `integration`/ directory.
 
-**CI**
+**Continuous Integration**
 
 Continuous integration setup with CircleCI (see `.circleci/config.yml`).
 
