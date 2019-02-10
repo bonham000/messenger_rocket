@@ -7,9 +7,9 @@ use super::repository;
 use super::types::{Message, SavedMessage};
 
 /// # Service method to return recent message history
-/// Returns most recent 50 messages
-pub fn get_messages(connection: DbConn) -> QueryResult<Vec<SavedMessage>> {
-    repository::get_messages(&connection)
+/// Returns most recent message history
+pub fn get_messages(limit: i64, connection: DbConn) -> QueryResult<Vec<SavedMessage>> {
+    repository::get_messages(limit, &connection)
 }
 
 /// # Service method to save a message

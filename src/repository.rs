@@ -6,21 +6,16 @@ use super::types::{InsertableMessage, Message, SavedMessage};
 
 /// # Get messages
 /// Method to return recent messages
-pub fn get_messages(connection: &PgConnection) -> QueryResult<Vec<SavedMessage>> {
-    let limit = 50;
-    let result = messages.limit(limit).load::<SavedMessage>(&*connection);
-
-    result
+pub fn get_messages(limit: i64, connection: &PgConnection) -> QueryResult<Vec<SavedMessage>> {
+    messages.limit(limit).load::<SavedMessage>(&*connection)
 }
 
 /// # Insert new message
 /// Method to insert a new message into the database
 pub fn save_message(new_message: Message, connection: &PgConnection) -> QueryResult<SavedMessage> {
-    let result = diesel::insert_into(messages)
+    diesel::insert_into(messages)
         .values(&InsertableMessage::from_message(new_message))
-        .get_result(connection);
-
-    result
+        .get_result(connection)
 }
 
 /// # Edit a message
@@ -29,11 +24,9 @@ pub fn edit_message(
     message_edit: SavedMessage,
     connection: &PgConnection,
 ) -> QueryResult<SavedMessage> {
-    let result = diesel::update(messages.filter(id.eq(message_edit.id)))
+    diesel::update(messages.filter(id.eq(message_edit.id)))
         .set(message.eq(message_edit.message))
-        .get_result(connection);
-
-    result
+        .get_result(connection)
 }
 
 /// # Delete a message

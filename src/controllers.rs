@@ -13,11 +13,19 @@ pub fn health_check() -> String {
 }
 
 /// # GET message history handler
-/// Returns most recent 50 messages
-/// TODO: Allow a limit parameter, or pagination...
-#[get("/messages")]
-pub fn get_messages(connection: DbConn) -> Result<Json<Vec<SavedMessage>>, Response<'static>> {
-    let result = service::get_messages(connection);
+/// Returns most recent messages
+#[get("/messages?<limit>")]
+pub fn get_messages(
+    limit: Option<i64>,
+    connection: DbConn,
+) -> Result<Json<Vec<SavedMessage>>, Response<'static>> {
+    let default_limit = 50;
+    let page_limit = match limit {
+        Some(value) => value,
+        None => default_limit,
+    };
+
+    let result = service::get_messages(page_limit, connection);
 
     match result {
         Ok(messages) => {
