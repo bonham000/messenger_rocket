@@ -12,7 +12,7 @@ services:
       - db
     command: >
       bash -c "bash ./wait-for-it.sh db:5432 -q --
-      echo DATABASE_URL=postgresql://postgres:pgpassword@db:5432/db> .env &&
+      echo DATABASE_URL=postgresql://postgres:pgpassword@db:5432/db > .env &&
       diesel setup &&
       diesel migration redo &&
       cargo run"
