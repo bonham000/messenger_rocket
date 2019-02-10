@@ -5,7 +5,7 @@ use ws::Message;
 
 use super::types::*;
 
-static ADDR: &'static str = "127.0.0.1:3012";
+static ADDR: &'static str = "0.0.0.0:3012";
 
 /// # Open WebSockets listener
 /// Handle realtime message communication to connected clients

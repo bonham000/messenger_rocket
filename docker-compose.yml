@@ -2,6 +2,7 @@ version: "3"
 
 services:
   web:
+    container_name: "Rocket"
     build: .
     ports:
       - "8000:8000"
@@ -10,13 +11,14 @@ services:
       - ./:/usr/src/app
     links:
       - db
+    environment:
+      DATABASE_URL: postgresql://postgres:pgpassword@db:5432/db
     command: >
       bash -c "bash ./wait-for-it.sh db:5432 -q --
-      echo DATABASE_URL=postgresql://postgres:pgpassword@db:5432/db > .env &&
-      diesel setup &&
-      diesel migration redo &&
+      diesel setup && diesel migration redo &&
       cargo run"
   db:
+    container_name: "Postgres"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: pgpassword
