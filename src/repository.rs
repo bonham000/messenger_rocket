@@ -7,7 +7,10 @@ use super::types::{InsertableMessage, Message, SavedMessage};
 /// # Get messages
 /// Method to return recent messages
 pub fn get_messages(limit: i64, connection: &PgConnection) -> QueryResult<Vec<SavedMessage>> {
-    messages.limit(limit).order(id).load::<SavedMessage>(&*connection)
+    messages
+        .limit(limit)
+        .order(id)
+        .load::<SavedMessage>(&*connection)
 }
 
 /// # Insert new message
