@@ -5,12 +5,21 @@ use super::schema::messages::dsl::*;
 use super::types::{InsertableMessage, Message, SavedMessage};
 
 /// # Get messages
-/// Method to return recent messages
+/// Method to return recent messages. Queries the most recent messages based on the provided
+/// limit, then sorts these by id and returns them.
 pub fn get_messages(limit: i64, connection: &PgConnection) -> QueryResult<Vec<SavedMessage>> {
-    messages
+    let result = messages
         .limit(limit)
-        .order(id)
-        .load::<SavedMessage>(&*connection)
+        .order(id.desc())
+        .load::<SavedMessage>(&*connection);
+
+    match result {
+        Ok(mut list) => {
+            list.sort_by(|a, b| a.id.cmp(&b.id));
+            Ok(list)
+        }
+        Err(e) => Err(e),
+    }
 }
 
 /// # Insert new message
