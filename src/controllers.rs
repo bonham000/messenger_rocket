@@ -106,6 +106,7 @@ pub fn delete_message(
 
 /// # DELETE all existing messages
 /// Deletes all messages that exist
+/// e.g. curl -X DELETE https://shrouded-coast-91311.herokuapp.com/admin/delete
 #[delete("/admin/delete")]
 pub fn delete_all(connection: DbConn) -> Result<Json<StatusResponse>, Response<'static>> {
     let result = service::delete_all(connection);

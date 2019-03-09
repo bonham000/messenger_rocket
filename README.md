@@ -1,7 +1,7 @@
 
 # Rocket Messenger App
 
-### Rust server using Rocket, WS-RS, Diesel, PostgreSQL, and Docker to support a real-time messenging app
+### Rust server using Rocket, WS-RS, Diesel, PostgreSQL, and Docker to support a real-time messaging app
 
 ***
 
